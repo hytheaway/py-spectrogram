@@ -5,11 +5,11 @@ from scipy import signal
 
 wavfile_path = input('Path to wav file: ')
 
-sample_rate, samples = wavfile.read(str(wavfile_path))
+sr, samples = wavfile.read(str(wavfile_path))
 
-frequencies, times, spectrogram = signal.spectrogram(samples, sample_rate)
+f, t, spectrogram = signal.spectrogram(samples, sr)
 
-plt.pcolormesh(times, frequencies, 10*np.log10(spectrogram), shading='gouraud')
+plt.pcolormesh(t, f, 10*np.log10(spectrogram), shading='gouraud')
 plt.ylabel('Frequency (Hz)')
 plt.xlabel('Time (s)')
 plt.colorbar(label='Intensity (dB)')
