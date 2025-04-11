@@ -4,12 +4,10 @@ from scipy.io import wavfile
 from scipy import signal
 
 wavfile_path = input('Path to wav file: ')
-
 start_ms = input('Start time (ms): ')
 end_ms = input('End time (ms): ')
 
 sr, samples = wavfile.read(str(wavfile_path))
-
 start_in_samples = (float(start_ms)/1000) * sr
 end_in_samples = (float(end_ms)/1000) * sr
 
@@ -19,7 +17,6 @@ if start_in_samples >= end_in_samples:
 
 start_in_samples = int(start_in_samples)
 end_in_samples = int(end_in_samples)
-
 rebound_samples = samples[start_in_samples:end_in_samples]
 
 f, t, spectrogram = signal.spectrogram(rebound_samples, sr)
