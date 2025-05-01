@@ -12,6 +12,13 @@ if not plot_title:
     plot_title = str(wavfile_path.split("/")[len(wavfile_path.split("/"))-1]) # python should convert this to whatever os
 
 sr, samples = wavfile.read(str(wavfile_path))
+
+if not start_ms:
+    start_ms = '0'
+
+if not end_ms:
+    end_ms = str((len(samples) / sr) * 1000)
+
 start_in_samples = (float(start_ms)/1000) * sr
 end_in_samples = (float(end_ms)/1000) * sr
 
