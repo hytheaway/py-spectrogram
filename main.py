@@ -7,6 +7,8 @@ wavfile_path = input('Path to wav file: ')
 start_ms = input('Start time (ms): ')
 end_ms = input('End time (ms): ')
 plot_title = input('Plot title: ')
+dynamic_range_min = input('Intensity scale min (dB): ')
+dynamic_range_max = input('Intensity scale max (dB): ')
 
 if not plot_title:
     plot_title = str(wavfile_path.split("/")[len(wavfile_path.split("/"))-1]) # python should convert this to whatever os
@@ -33,7 +35,15 @@ rebound_samples = samples[start_in_samples:end_in_samples]
 f, t, spectrogram = signal.spectrogram(rebound_samples, sr)
 
 fig, ax = plt.subplots()
-p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), shading='gouraud')
+# i could've done this better
+if dynamic_range_min and dynamic_range_max:
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), vmax=int(dynamic_range_max), shading='gouraud')
+elif not dynamic_range_min and dynamic_range_max:
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmax=int(dynamic_range_max), shading='gouraud')
+elif dynamic_range_min and not dynamic_range_max:
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), shading='gouraud')
+else:
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), shading='gouraud')
 ax.set_ylim(1, int(sr/2))
 ax.set_ylabel('Frequency (Hz)')
 ax.set_xlabel('Time (s)')
