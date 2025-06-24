@@ -15,6 +15,9 @@ if not plot_title:
 
 sr, samples = wavfile.read(str(wavfile_path))
 
+if len(samples.shape) > 1:
+    samples = samples.transpose()[0]
+
 if not start_ms:
     start_ms = '0'
 
@@ -37,13 +40,13 @@ f, t, spectrogram = signal.spectrogram(rebound_samples, sr)
 fig, ax = plt.subplots()
 # i could've done this better
 if dynamic_range_min and dynamic_range_max:
-    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), vmax=int(dynamic_range_max), shading='gouraud')
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), vmax=int(dynamic_range_max), shading='auto')
 elif not dynamic_range_min and dynamic_range_max:
-    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmax=int(dynamic_range_max), shading='gouraud')
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmax=int(dynamic_range_max), shading='auto')
 elif dynamic_range_min and not dynamic_range_max:
-    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), shading='gouraud')
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), vmin=int(dynamic_range_min), shading='auto')
 else:
-    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), shading='gouraud')
+    p = ax.pcolormesh(t, f, 10*np.log10(spectrogram), shading='auto')
 ax.set_ylim(1, int(sr/2))
 ax.set_ylabel('Frequency (Hz)')
 ax.set_xlabel('Time (s)')
