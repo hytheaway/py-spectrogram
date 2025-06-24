@@ -14,7 +14,6 @@ dynamic_range_min = input('Intensity scale min (dB): ')
 dynamic_range_max = input('Intensity scale max (dB): ')
 
 if not plot_title:
-    # plot_title = str(wavfile_path.split("/")[len(wavfile_path.split("/"))-1]) # python should convert this to whatever os
     plot_title = os.path.basename(wavfile_path)
 
 sr, samples = wavfile.read(str(wavfile_path))
