@@ -1,9 +1,12 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 from scipy import signal
 
 wavfile_path = input('Path to wav file: ')
+if wavfile_path[0] == '"':
+    wavfile_path = wavfile_path[1:-1]
 start_ms = input('Start time (ms): ')
 end_ms = input('End time (ms): ')
 plot_title = input('Plot title: ')
@@ -11,7 +14,8 @@ dynamic_range_min = input('Intensity scale min (dB): ')
 dynamic_range_max = input('Intensity scale max (dB): ')
 
 if not plot_title:
-    plot_title = str(wavfile_path.split("/")[len(wavfile_path.split("/"))-1]) # python should convert this to whatever os
+    # plot_title = str(wavfile_path.split("/")[len(wavfile_path.split("/"))-1]) # python should convert this to whatever os
+    plot_title = os.path.basename(wavfile_path)
 
 sr, samples = wavfile.read(str(wavfile_path))
 
